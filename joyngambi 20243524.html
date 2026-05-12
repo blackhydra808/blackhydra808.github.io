@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kapasa Makasa University | Interactive Portfolio</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f0f4fa;
+            --surface: #ffffff;
+            --primary: #0b2a4a;
+            --accent: #f0b830;
+            --accent2: #d4a017;
+            --text: #1a2a3a;
+            --text-light: #4a5a6a;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            --radius: 28px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body.dark {
+            --bg: #0f1722;
+            --surface: #1a2538;
+            --primary: #e8edf4;
+            --accent: #f0b830;
+            --accent2: #f5c542;
+            --text: #eef2f7;
+            --text-light: #b0c0d0;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--surface);
+            padding: 0.7rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.92);
+            transition: var(--transition);
+        }
+
+        body.dark header {
+            background: rgba(26, 37, 56, 0.92);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-area img {
+            height: 48px;
+            width: auto;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .logo-area img:hover {
+            transform: rotate(-4deg) scale(1.04);
+        }
+
+        .logo-area .site-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav .nav-link {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        nav .nav-link:hover {
+            background: var(--accent);
+            color: #0b2a4a;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        nav .nav-link.active {
+            background: var(--accent);
+            color: #0b2a4a;
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(240, 184, 48, 0.3);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 6px 10px;
+            border-radius: 50%;
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: #0b2a4a;
+            transform: rotate(20deg);
+        }
+
+        /* ===== MAIN ===== */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        /* ===== PAGES (show/hide) ===== */
+        .page {
+            display: none;
+            animation: fadeSlideIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== HOME PAGE ===== */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2.8rem 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .hero-text {
+            flex: 1 1 300px;
+        }
+
+        .hero-text .greeting {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0.3rem 0 0.2rem;
+            line-height: 1.1;
+            transition: var(--transition);
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--accent), #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .typing-wrapper {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-light);
+            min-height: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .typing-wrapper .typed-text {
+            color: var(--accent);
+            border-right: 3px solid var(--accent);
+            padding-right: 6px;
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .hero-text p {
+            font-size: 1.08rem;
+            color: var(--text-light);
+            margin-bottom: 1.8rem;
+            max-width: 520px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(11, 42, 74, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: #0b2a4a;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(240, 184, 48, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .hero-image {
+            flex: 0 0 240px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 50%;
+            border: 6px solid var(--accent);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            transition: var(--transition);
+            filter: grayscale(10%);
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.04) rotate(2deg);
+            filter: grayscale(0%);
+            border-color: var(--accent2);
+        }
+
+        .hero-image .pulse-ring {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            opacity: 0.3;
+            animation: pulse 2.5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.3;
+            }
+            70% {
+                transform: translateX(-50%) scale(1.1);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-50%) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Home cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 2rem 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            cursor: default;
+            border: 1px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            border-color: var(--accent);
+        }
+
+        .card .icon {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            transition: var(--transition);
+        }
+
+        .card:hover .icon {
+            transform: scale(1.2) rotate(6deg);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== ABOUT PAGE ===== */
+        .about-wrap {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2.8rem 3rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .about-wrap h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            border-left: 6px solid var(--accent);
+            padding-left: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-wrap h2 i {
+            color: var(--accent);
+            font-size: 2rem;
+        }
+
+        .about-wrap p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-bar {
+            margin-bottom: 1rem;
+        }
+
+        .skill-bar .skill-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .skill-bar .bar-track {
+            height: 10px;
+            background: #dce3ec;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        body.dark .skill-bar .bar-track {
+            background: #2a3a4a;
+        }
+
+        .skill-bar .bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #4caf50);
+            border-radius: 20px;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .skill-bar.animate .bar-fill {
+            width: var(--target);
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1.2rem 0;
+        }
+
+        .skills-tags span {
+            background: var(--bg);
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+            transition: var(--transition);
+            border: 1px solid transparent;
+            cursor: default;
+        }
+
+        .skills-tags span:hover {
+            background: var(--accent);
+            color: #0b2a4a;
+            transform: scale(1.06);
+            border-color: var(--accent);
+        }
+
+        /* ===== CONTACT PAGE ===== */
+        .contact-wrap {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2.8rem 3rem;
+            box-shadow: var(--shadow);
+            max-width: 640px;
+            margin: 0 auto;
+            transition: var(--transition);
+        }
+
+        .contact-wrap h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-wrap .sub {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #d0d8e0;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        body.dark .form-group input,
+        body.dark .form-group textarea {
+            border-color: #2a3a4a;
+            background: #1a2538;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 6px rgba(240, 184, 48, 0.15);
+        }
+
+        .form-group .error-msg {
+            color: #c0392b;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #c0392b;
+        }
+
+        .form-group.error .error-msg {
+            display: block;
+        }
+
+        .contact-wrap .btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 0.8rem;
+            justify-content: center;
+        }
+
+        #formFeedback {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 16px;
+            display: none;
+            transition: var(--transition);
+        }
+
+        #formFeedback.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        #formFeedback.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--surface);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.4rem 2rem;
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        footer a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 750px) {
+            header {
+                padding: 0.7rem 1.2rem;
+            }
+
+            .logo-area .site-name {
+                font-size: 1.1rem;
+            }
+
+            nav .nav-link {
+                padding: 8px 16px;
+                font-size: 0.82rem;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .typing-wrapper {
+                font-size: 1.1rem;
+            }
+
+            .hero-image {
+                flex-basis: 180px;
+            }
+
+            .hero-image img {
+                max-width: 180px;
+            }
+
+            .about-wrap,
+            .contact-wrap {
+                padding: 2rem 1.2rem;
+            }
+
+            .about-wrap h2 {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .theme-toggle {
+                font-size: 1.3rem;
+                padding: 4px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo-area">
+            <!-- Kapasa Makasa University Logo -->
+            <img
+            src="https://th.bing.com/th/id/R.0c16beb28efbe156156548ebb0bcb465?rik=9iGZlsvwB%2fDTlA&pid=ImgRaw&r=0"
+            alt="Kapasa Makasa University Logo"
+            />
+            <span class="site-name">KAPASA MAKASA UNIVERSITY</span>
+        </div>
+        <nav>
+            <span class="nav-link active" data-page="home">Home</span>
+            <span class="nav-link" data-page="about">About</span>
+            <span class="nav-link" data-page="contact">Contact</span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+
+        <!-- ===== HOME PAGE ===== -->
+        <section class="page active" id="page-home">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="greeting"> Welcome</div>
+                    <h1>I'm <span>Ngambi Joy</span></h1>
+                    <div class="typing-wrapper">
+                        <span class="typed-text" id="typedText"></span>
+                    </div>
+                    <p>
+                        Im a creative student at <strong>Kapasa Makasa University</strong>.
+                        I have built a clean, interactive web experiences. Im  passionate about ethical hacking, network security, and digital forensics.
+
+This website showcases my journey, skills, and how you can connect with me. .
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn" data-nav="about">
+                            <i class="fas fa-user"></i> About Me
+                        </button>
+                        <button class="btn btn-outline" data-nav="contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="pulse-ring"></div>
+                    <!-- Replace with your own photo -->
+                    <img
+                    src="https://i.pravatar.cc/300?img=12"
+                    alt="My Photo"
+                    />
+                </div>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Student</h3>
+                    <p>Kapasa Makasa University — pursuing excellence every day.</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>Web Developer</h3>
+                    <p>Building responsive, dynamic, and user-friendly websites.</p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Innovator</h3>
+                    <p>Passionate about tech, design, and creative problem-solving.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT PAGE ===== -->
+        <section class="page" id="page-about">
+            <div class="about-wrap">
+                <h2><i class="fas fa-user-astronaut"></i> About Me</h2>
+                <p>
+                    I'm a dedicated student at Kapasa Makasa University with a deep interest
+                    for web development and design. I believe in writing clean code,
+                    creating meaningful interactions, and always learning something new.
+                </p>
+                <p>
+                    Outside of tech, I enjoy photography, reading, and exploring new ideas.
+                    This website is a small window into my world, feel free to connect!
+                </p>
+
+                <div class="skill-section">
+                    <h3><i class="fas fa-chart-line"></i> My Skills</h3>
+                    <div class="skill-bar" data-target="42">
+                        <div class="skill-label">
+                            <span>HTML &amp; CSS</span>
+                            <span>42%</span>
+                        </div>
+                        <div class="bar-track">
+<div class="bar-fill"></div>
+</div>
+                    </div>
+                    <div class="skill-bar" data-target="30">
+                        <div class="skill-label">
+                            <span>JavaScript</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill"></div></div>
+                    </div>
+                    <div class="skill-bar" data-target="65">
+                        <div class="skill-label">
+                            <span>Python</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill"></div></div>
+                    </div>
+                    <div class="skill-bar" data-target="35">
+                        <div class="skill-label">
+                            <span>UI/UX Design</span>
+                            <span>35%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill"></div></div>
+                    </div>
+                </div>
+
+                <div class="skills-tags">
+                    <span>Network Security</span>
+                    <span>Linux</span>
+                    <span>Python</span>
+                    <span>ProblemSolver</span>
+                    <span>SQL</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT PAGE ===== -->
+        <section class="page" id="page-contact">
+            <div class="contact-wrap">
+                <h2><i class="fas fa-paper-plane"></i> Get in Touch</h2>
+                <p class="sub">Have a question, a project idea, or just want to say hi? I'd love to hear from you.</p>
+
+                <form id="contactForm" novalidate>
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="eg. Mutunda Paul " required />
+                        <div class="error-msg">Please enter your name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="example@gmail.com" required />
+                        <div class="error-msg">Please enter a valid email.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" placeholder="Write your message here..." required></textarea>
+                        <div class="error-msg">Message cannot be empty.</div>
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div id="formFeedback"></div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2025 NGAMBI JOY &bull; Built for all <a href="https://www.kmu.ac.zm" target="_blank">Kapasa Makasa University</a></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ----- ELEMENTS -----
+            const navLinks = document.querySelectorAll('.nav-link[data-page]');
+            const pages = document.querySelectorAll('.page');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const typedElement = document.getElementById('typedText');
+            const contactForm = document.getElementById('contactForm');
+            const formFeedback = document.getElementById('formFeedback');
+
+            // ----- TYPING EFFECT -----
+            const phrases = [
+                'Web Developer ',
+                'UI/UX Enthusiast ',
+                'Student at KMU 📚',
+                'Creative Thinker ',
+                'Tech Explorer '
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typeTimer;
+
+            function typeEffect() {
+                const current = phrases[phraseIndex];
+                if (!isDeleting) {
+                    typedElement.textContent = current.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === current.length) {
+                        isDeleting = true;
+                        clearTimeout(typeTimer);
+                        typeTimer = setTimeout(typeEffect, 2000);
+                        return;
+                    }
+                    typeTimer = setTimeout(typeEffect, 80);
+                } else {
+                    typedElement.textContent = current.substring(0, charIndex - 1);
+                    charIndex--;
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        clearTimeout(typeTimer);
+                        typeTimer = setTimeout(typeEffect, 400);
+                        return;
+                    }
+                    typeTimer = setTimeout(typeEffect, 40);
+                }
+            }
+            typeEffect();
+
+            // ----- PAGE NAVIGATION -----
+            function switchPage(pageId) {
+                // Remove active from all pages and nav links
+                pages.forEach(p => p.classList.remove('active'));
+                navLinks.forEach(l => l.classList.remove('active'));
+
+                // Activate target page
+                const targetPage = document.getElementById('page-' + pageId);
+                if (targetPage) targetPage.classList.add('active');
+
+                // Activate nav link
+                const activeLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+                if (activeLink) activeLink.classList.add('active');
+
+                // Animate skill bars when about page is shown
+                if (pageId === 'about') {
+                    animateSkillBars();
+                }
+
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const page = this.dataset.page;
+                    if (page) switchPage(page);
+                });
+            });
+
+            // Buttons with data-nav
+            document.querySelectorAll('[data-nav]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = this.dataset.nav;
+                    if (page) switchPage(page);
+                });
+            });
+
+            // ----- SKILL BARS (animate on about page) -----
+            let skillBarsAnimated = false;
+
+            function animateSkillBars() {
+                const bars = document.querySelectorAll('.skill-bar');
+                bars.forEach(bar => {
+                    const target = bar.dataset.target;
+                    const fill = bar.querySelector('.bar-fill');
+                    if (fill && target) {
+                        // Reset and animate
+                        fill.style.width = target + '%';
+                        // Force reflow
+                        void fill.offsetWidth;
+                        fill.style.setProperty('--target', target + '%');
+                        bar.classList.add('animate');
+                    }
+                });
+                skillBarsAnimated = true;
+            }
+
+            // Intersection Observer for about page skill bars
+            const aboutPage = document.getElementById('page-about');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !skillBarsAnimated) {
+                        animateSkillBars();
+                    }
+                });
+            }, { threshold: 0.3 });
+            observer.observe(aboutPage);
+
+            // Also trigger if about is already visible on load (if active)
+            if (aboutPage.classList.contains('active')) {
+                setTimeout(animateSkillBars, 400);
+            }
+
+            // ----- THEME TOGGLE -----
+            function setTheme(dark) {
+                if (dark) {
+                    document.body.classList.add('dark');
+                    themeIcon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark');
+                    themeIcon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                setTheme(true);
+            } else if (savedTheme === 'light') {
+                setTheme(false);
+            } else {
+                // System preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark);
+            }
+
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.body.classList.contains('dark');
+                setTheme(!isDark);
+            });
+
+            // ----- CONTACT FORM VALIDATION -----
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                formFeedback.style.display = 'none';
+                formFeedback.className = '';
+
+                let isValid = true;
+
+                // Name
+                const nameInput = document.getElementById('name');
+                const nameGroup = nameInput.closest('.form-group');
+                if (nameInput.value.trim() === '') {
+                    nameGroup.classList.add('error');
+                    isValid = false;
+                } else {
+                    nameGroup.classList.remove('error');
+                }
+
+                // Email
+                const emailInput = document.getElementById('email');
+                const emailGroup = emailInput.closest('.form-group');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value.trim())) {
+                    emailGroup.classList.add('error');
+                    isValid = false;
+                } else {
+                    emailGroup.classList.remove('error');
+                }
+
+                // Message
+                const msgInput = document.getElementById('message');
+                const msgGroup = msgInput.closest('.form-group');
+                if (msgInput.value.trim() === '') {
+                    msgGroup.classList.add('error');
+                    isValid = false;
+                } else {
+                    msgGroup.classList.remove('error');
+                }
+
+                if (isValid) {
+                    formFeedback.textContent = '✅ Thank you! Your message has been sent successfully.';
+                    formFeedback.className = 'success';
+                    formFeedback.style.display = 'block';
+                    contactForm.reset();
+                    // Simulate success (in real scenario, send data)
+                } else {
+                    formFeedback.textContent = '⚠️ Please fix the errors above.';
+                    formFeedback.className = 'error';
+                    formFeedback.style.display = 'block';
+                }
+
+                // Hide feedback after 5 seconds
+                setTimeout(() => {
+                    formFeedback.style.display = 'none';
+                }, 5000);
+            });
+
+            // Remove error on input
+            document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => {
+                el.addEventListener('input', function() {
+                    const group = this.closest('.form-group');
+                    if (group.classList.contains('error')) {
+                        group.classList.remove('error');
+                    }
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
